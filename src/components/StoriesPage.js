@@ -84,7 +84,7 @@ function StoriesPage() {
             <Navbar />
             <div className='py-3' style={{ backgroundColor: "#fffad7" }}>
                 <div className='d-flex justify-content-center' style={{ fontSize: "32px" }}>Top Stories today</div>
-                {(loading == true) ? <div className="text-center my-5"><button class="btn btn-primary" type="button" disabled>
+                {(loading == true) ? <div className="text-center my-3"><button class="btn btn-primary" type="button" disabled>
                     <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     Loading...
                 </button></div> :
