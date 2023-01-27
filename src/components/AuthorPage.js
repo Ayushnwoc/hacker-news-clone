@@ -20,6 +20,11 @@ function AuthorPage() {
         fetchData();
 
     }, [id]);
+    const getText = (html) => {
+        var divContainer = document.createElement("div");
+        divContainer.innerHTML = html;
+        return divContainer.textContent || divContainer.innerText || "";
+    }
     return (
         <div style={{backgroundColor:"#fff8c4"}}>
             <div className='container py-4' >
@@ -27,7 +32,7 @@ function AuthorPage() {
                 <p>Created : {user.created_at}</p>
                 <p>Karma : {user.karma}</p>
                 <p>
-                    About : {user.about}
+                    About : {getText(user.about)}
                 </p>
             </div>
         </div>

@@ -84,7 +84,6 @@ function StoriesPage() {
                 <div className='d-flex justify-content-center' style={{ fontSize: "32px" }}>Top Stories today</div>
                 {stories.map((story) => (
                     <div className='card my-2 mx-4' style={{ backgroundColor: "#fff8c4" }} key={story.objectID}>
-
                         <>
                             <div className="card-body">
                                 <div className='d-inline-flex '>
