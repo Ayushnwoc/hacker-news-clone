@@ -7,7 +7,7 @@ import './style.css'
 function SearchPage() {
 
   const [stories, setStories] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState({
     type: 'top',
     time: 'all',
@@ -44,11 +44,11 @@ function SearchPage() {
           response = await axios.get(`http://hn.algolia.com/api/v1/search_by_date?tags=${tag}&numericFilters=${numericFilter}&query=${query}&page=${page}&hitsPerPage=${hitsPerPage}`)
 
         setStories(response.data.hits);
-
+        setLoading(false);
       } catch (err) {
         console.error(err);
       }
-      setLoading(false);
+
     };
     fetchData();
   }, [query, page, hitsPerPage, tag, date, time, numericFilter]);
@@ -217,8 +217,10 @@ function SearchPage() {
         {stories.map((story) => (
           <div className='card my-2 mx-4' style={{ backgroundColor: "#fff8c4" }} key={story.objectID}>
             {(tag !== 'comment') ?
-              <>{(loading == true) ? <div className="spinner-border text-primary" role="status">
-              </div>
+              <>{(loading == true) ? <div className="text-center my-5"><button class="btn btn-primary" type="button" disabled>
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button></div>
                 :
                 <div className="card-body">
                   <div className='d-inline-flex '>
@@ -237,12 +239,15 @@ function SearchPage() {
                     <a className='mx-2 text-muted' style={{ textDecoration: 'none', fontSize: 'small', cursor: "unset" }}>|</a>
                     <a className="card-subtitle text-muted my-0" style={{ textDecoration: 'none', fontSize: 'small', cursor: "pointer" }} onClick={() => cmtPage(story.objectID)}>{story.num_comments} comments</a>
                   </div>
-                </div>}
+                </div>
+              }
                 {/* <CommentsPage storyId={stories.objectID} /> */}
                 {/* <AuthorPage authorId={stories.author} /> */}
               </>
-              : <>{(loading == true) ? <div className="spinner-border text-primary" role="status">
-              </div>
+              : <>{(loading == true) ? <div className="text-center my-5"><button class="btn btn-primary" type="button" disabled>
+                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button></div>
                 :
                 <div className="card-body">
                   <div >

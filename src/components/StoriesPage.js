@@ -7,17 +7,19 @@ import Navbar from './Navbar';
 function StoriesPage() {
     const [stories, setStories] = useState([]);
     const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
     const [hitsPerPage, setHitsPerPage] = useState(50);
     const [tag, setTag] = useState("story");
     let navigate = useNavigate();
     useEffect(() => {
+        setLoading(true);
         const fetchData = async () => {
             try {
                 let response = "";
                 response = await axios.get(`http://hn.algolia.com/api/v1/search_by_date?tags=story&page=${page}&hitsPerPage=${hitsPerPage}`);
                 setStories(response.data.hits);
-                console.log(8)
-                console.log(response)
+                setLoading(false);
+                // console.log(response)
             }
             catch (err) {
                 console.error(err);
@@ -82,31 +84,39 @@ function StoriesPage() {
             <Navbar />
             <div className='py-3' style={{ backgroundColor: "#fffad7" }}>
                 <div className='d-flex justify-content-center' style={{ fontSize: "32px" }}>Top Stories today</div>
-                {stories.map((story) => (
-                    <div className='card my-2 mx-4' style={{ backgroundColor: "#fff8c4" }} key={story.objectID}>
-                        <>
-                            <div className="card-body">
-                                <div className='d-inline-flex '>
-                                    {/* when url is blank to be done */}
-                                    <a className="card-title my-0" style={{ textDecoration: 'none', color: '#000000', fontSize: 'larger', fontWeight: "500" }} href={`${story.url}`}>{story.title}</a>
-                                    <a className="card-subtitle mt-1 mx-2 text-muted my-0 pt-1" style={{ textDecoration: 'none', fontSize: '10px' }} target="_blank" href={`${story.url}`}>{filterUrl(story.url)}</a>
-                                </div>
-                                <div >
-                                    <a className="card-subtitle text-muted my-0" style={{ textDecoration: 'none', fontSize: 'small', cursor: "pointer" }} onClick={() => cmtPage(story.objectID)}>{story.points} points</a>
-                                    <a className='mx-2 text-muted' style={{ textDecoration: 'none', fontSize: 'small', cursor: "unset" }}>|</a>
-                                    <a className="card-subtitle text-muted my-0" style={{ textDecoration: 'none', fontSize: 'small', cursor: "pointer" }} onClick={() => authorPage(story.author)}>{story.author}</a>
-                                    <a className='mx-2 text-muted' style={{ textDecoration: 'none', fontSize: 'small', cursor: "unset" }}>|</a>
-                                    <a className="card-subtitle text-muted my-0" style={{ textDecoration: 'none', fontSize: 'small', cursor: "pointer" }} onClick={() => cmtPage(story.objectID)}>{timeSince(story.created_at)}</a>
-                                    <a className='mx-2 text-muted' style={{ textDecoration: 'none', fontSize: 'small', cursor: "unset" }}>|</a>
-                                    <a className="card-subtitle text-muted my-0" style={{ textDecoration: 'none', fontSize: 'small', cursor: "pointer" }} onClick={() => cmtPage(story.objectID)}>{story.num_comments} comments</a>
-                                </div>
-                            </div>
-                            {/* <CommentsPage storyId={stories.objectID} /> */}
-                            {/* <AuthorPage authorId={stories.author} /> */}
-                        </>
+                {(loading == true) ? <div className="text-center my-5"><button class="btn btn-primary" type="button" disabled>
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button></div> :
 
-                    </div>
-                ))}
+                    <>{stories.map((story) => (
+                        <div className='card my-2 mx-4' style={{ backgroundColor: "#fff8c4" }} key={story.objectID}>
+                            <>
+                                <div className="card-body">
+                                    <div className='d-inline-flex '>
+                                        {/* when url is blank to be done */}
+                                        <a className="card-title my-0" style={{ textDecoration: 'none', color: '#000000', fontSize: 'larger', fontWeight: "500" }} href={`${story.url}`}>{story.title}</a>
+                                        <a className="card-subtitle mt-1 mx-2 text-muted my-0 pt-1" style={{ textDecoration: 'none', fontSize: '10px' }} target="_blank" href={`${story.url}`}>{filterUrl(story.url)}</a>
+                                    </div>
+                                    <div >
+                                        <a className="card-subtitle text-muted my-0" style={{ textDecoration: 'none', fontSize: 'small', cursor: "pointer" }} onClick={() => cmtPage(story.objectID)}>{story.points} points</a>
+                                        <a className='mx-2 text-muted' style={{ textDecoration: 'none', fontSize: 'small', cursor: "unset" }}>|</a>
+                                        <a className="card-subtitle text-muted my-0" style={{ textDecoration: 'none', fontSize: 'small', cursor: "pointer" }} onClick={() => authorPage(story.author)}>{story.author}</a>
+                                        <a className='mx-2 text-muted' style={{ textDecoration: 'none', fontSize: 'small', cursor: "unset" }}>|</a>
+                                        <a className="card-subtitle text-muted my-0" style={{ textDecoration: 'none', fontSize: 'small', cursor: "pointer" }} onClick={() => cmtPage(story.objectID)}>{timeSince(story.created_at)}</a>
+                                        <a className='mx-2 text-muted' style={{ textDecoration: 'none', fontSize: 'small', cursor: "unset" }}>|</a>
+                                        <a className="card-subtitle text-muted my-0" style={{ textDecoration: 'none', fontSize: 'small', cursor: "pointer" }} onClick={() => cmtPage(story.objectID)}>{story.num_comments} comments</a>
+                                    </div>
+                                </div>
+                                {/* <CommentsPage storyId={stories.objectID} /> */}
+                                {/* <AuthorPage authorId={stories.author} /> */}
+                            </>
+
+                        </div>
+                    ))}</>
+
+
+                }
                 <Pagination postsPerPage={hitsPerPage} totalPosts='1000' paginate={paginate}></Pagination>
             </div>
         </>
