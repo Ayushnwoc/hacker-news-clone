@@ -213,16 +213,16 @@ function SearchPage() {
           </div>
         </div>
       </nav>
-      <>{(loading == true) ? <div className="text-center py-3" style={{backgroundColor:"#fffad7"}}><button class="btn btn-primary" type="button" disabled >
-                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+      <>{(loading == true) ? <div className="text-center py-3" style={{backgroundColor:"#fffad7"}}><button className="btn btn-primary" type="button" disabled >
+                    <span className="spinner-grow spinner-grow-sm mx-2" role="status" aria-hidden="true"></span>
                     Loading...
                 </button></div> :
         <div className='py-3' style={{ backgroundColor: "#fffad7" }}>
           {stories.map((story) => (
             <div className='card my-2 mx-4' style={{ backgroundColor: "#fff8c4" }} key={story.objectID}>
               {(tag !== 'comment') ?
-                <>{(loading == true) ? <div className="text-center my-5" ><button class="btn btn-primary" type="button" disabled>
-                  <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                <>{(loading == true) ? <div className="text-center my-5" ><button className="btn btn-primary" type="button" disabled>
+                  <span className="spinner-grow spinner-grow-sm mx-2" role="status" aria-hidden="true"></span>
                   Loading...
                 </button></div>
                   :
@@ -248,8 +248,8 @@ function SearchPage() {
                   {/* <CommentsPage storyId={stories.objectID} /> */}
                   {/* <AuthorPage authorId={stories.author} /> */}
                 </>
-                : <>{(loading == true) ? <div className="text-center my-5"><button class="btn btn-primary" type="button" disabled>
-                  <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                : <>{(loading == true) ? <div className="text-center my-5"><button className="btn btn-primary" type="button" disabled>
+                  <span className="spinner-grow spinner-grow-sm mx-2" role="status" aria-hidden="true"></span>
                   Loading...
                 </button></div>
                   :
